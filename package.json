@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "all": "^0.0.0",
+    "dependencies": "^0.0.1",
+    "express": "^4.19.2",
+    "in": "^0.19.0",
+    "install": "^0.13.0",
+    "project": "^0.1.6",
+    "the": "^1.0.2",
+    "your": "^0.2.3"
+  },
+  "name": "sba-express-server-application",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server.js"
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bdemissie/SBA-Express-Server-Application.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bdemissie/SBA-Express-Server-Application/issues"
+  },
+  "homepage": "https://github.com/bdemissie/SBA-Express-Server-Application#readme"
+}
