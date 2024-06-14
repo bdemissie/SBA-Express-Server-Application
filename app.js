@@ -1,59 +1,43 @@
 
 // Import the Express framework to create and manage the server application.
 const express = require('express');
+// Import body-parser middleware to parse incoming request bodies.
+const bodyParser = require('body-parser');
+
 
 // Initialize an express application
 const app = express();
 // Select port number
 const port = 3000;
 
-// Import body-parser middleware to parse incoming request bodies.
-const bodyParser = require('body-parser');
-
-
-
-// serve static files from the styles directory
-app.use(express.static("./style"));
-
-app.use('/style', express.static('style'));
-app.use("../node_modules/bootstrap/dist/css", express.static('style'));
-
-const fs = require('fs')
-
-// // define the template engine
-// app.engine("perscholas", (filePath, options, callback) => {
-//     fs.readFile(filePath, 'utf8', (err, content) => {
-//         if (err) return callback(err);
-
-//         const rendered = content.toString().replaceAll("#title#", `${options.title}`)
-//         .replace("#content", `${options.content}`);
-//         return callback(null, rendered)
-//     });
-// });
-
-app.set("views", "./views"); // specify the views directory
-app.set("view engine", "ejs"); // register the template engine
-
 // Import diary entries from local database
 const entries = require("./data/entries");
 
-
-
-
-
-
+// Set views path and view engines
+app.set("views", "./views"); // specify the views directory
+app.set("view engine", "ejs"); // register the template engine
 
 // Middleware for parsing JSON and urlencoded form data
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true }));
 
+// Custom log Middleware
 
-// // Middleware for logging requests
-// app.use((req, res, next) => {
-//     console.log(`${req.method} ${req.url}`);
-//     next();
-// });
+app.use((req, res, next) => {
+    console.log(`${req.method} request for ${req.url}`);
+    next();
+});
 
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send("Something Broke")
+})
+
+// serve static files from the styles directory
+app.use(express.static("./style"));
+
+// app.use('/style', express.static('style'));
 
 // RESTful API routes
 // GET all entries
@@ -61,10 +45,28 @@ app.use(bodyParser.json({ extended: true }));
 app.get("/api", (req, res) => {
     res.send("Welcome to my Diary")
 })
+
 app.get('/api/entries', (req, res) => {
     res.render('index', {entries})    
 });
 
+app.get('/api/entries/new-entry', (req, res) => {
+    res.render('new-entry')
+});
+
+app.post('/api/entries/new-entry', (req, res) => {
+    const {date, title, content} = req.body;
+    if (title && content) {
+        entries.push({
+            date: new Date(date), title, content})
+        res.redirect("/api/entries")
+        res.status(201).json({ message: "Entry added successfully", entries })
+    }
+    else {
+        res.status(400).send("Provide all the required information")
+    }
+        
+})
 
 
 // // POST a new entry
