@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/style.css" rel="stylesheet">
+    <title>My Diary</title>
+</head>
+
+<body>
+    <h1>Diary Entry</h1>
+    </ul>
+        <li>
+            <h2>
+                <%= searchEntry.title %>
+            </h2>
+            <p>
+                <%= searchEntry.content %>
+            </p>
+            <small>
+                <%= searchEntry.date %>
+            </small>
+            <br>
+            <small>
+                <a href="/api/entries">Back to Diary</a>
+                <br>
+            <form action="/api/entries/delete-entry/<%= searchEntry.date %>?_method=DELETE" method="POST"
+                style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+            </small>
+        </li>
+ 
+    </ul>
+
+
+</body>

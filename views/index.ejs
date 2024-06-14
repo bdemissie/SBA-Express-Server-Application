@@ -11,6 +11,8 @@
 <body>
     <h1>Diary Entries</h1>
     <a href="/api/entries/new-entry">Add New Entry</a>
+    <br>
+    <a href="/api/entries/search">Search by Date</a>
     </ul>
         <% entries.forEach(entry=> { %>
             <li>
@@ -20,7 +22,7 @@
                 <p>
                     <%= entry.content %>
                 </p>
-                <small><%= new Date(entry.date).toLocaleDateString() %></small>
+                <small><%= entry.date %></small>
             </li>
             <% }); %>
         </ul>
